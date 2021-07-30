@@ -3,10 +3,19 @@ package cn.jaspter.springboot.aop.advice;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 @Aspect
@@ -18,20 +27,21 @@ public class ForumAspects {
     }
 
     @Before("pointCut()")
-    public void before(JoinPoint joinPoint){
+    public void before(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         String className = joinPoint.getTarget().getClass().getName();
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         String methodName = methodSignature.getName();
         System.out.println(className + ":" + methodName);
-        System.out.println("***********before"+ args[0]);
+        System.out.println("***********before" + args[0]);
     }
 
     @After("pointCut()")
-    public void after(){
+    public void after() {
         System.out.println("***********after");
     }
+
     @Around("execution(* cn.jaspter.springboot.aop.advice.Waiter.*(..))")
     public Object process(ProceedingJoinPoint point) throws Throwable {
         System.out.println("@Around：执行目标方法之前...");
@@ -47,8 +57,8 @@ public class ForumAspects {
         return "原返回值：" + returnValue + "，这是返回结果的后缀";
     }
 
-    @AfterReturning(pointcut="execution(* cn.jaspter.springboot.aop.advice.Waiter.*(..))",
-            returning="returnValue")
+    @AfterReturning(pointcut = "execution(* cn.jaspter.springboot.aop.advice.Waiter.*(..))",
+            returning = "returnValue")
     public void log(JoinPoint point, Object returnValue) {
         System.out.println("@AfterReturning：模拟日志记录功能...");
         System.out.println("@AfterReturning：目标方法为：" +
@@ -61,5 +71,20 @@ public class ForumAspects {
 
     }
 
+    @AfterThrowing(pointcut = "execution(* cn.jaspter.springboot.aop.advice.ForumService.*(..))", throwing = "ex")
+    public void error(JoinPoint jp, Throwable ex) throws UnsupportedEncodingException {
+        System.out.println("@AfterThrowing：异常增强功能...");
+
+        MethodSignature signature = (MethodSignature) jp.getSignature();
+        Method method = signature.getMethod();
+        if (ex.getClass().equals(RuntimeException.class)) {
+            System.out.println("运行中异常：" + ex.getMessage());
+        } else if (ex.getClass().equals(SQLException.class)) {
+            System.out.println("数据更新操作异常：" + ex.getMessage());
+        }
+        /**
+         * 此处逻辑 就是方法异常的处理逻辑，不予赘述
+         */
+    }
 
 }

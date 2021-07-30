@@ -1,9 +1,9 @@
 package cn.jaspter.springboot.aop.advice;
 
-import cn.jaspter.spring.aop.advice.Forum;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-
+@Service
 public class ForumService {
     public void removeForum(int forumId) {
         // do sth...

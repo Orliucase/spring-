@@ -2,6 +2,7 @@ package cn.jaspter.springboot.aop;
 
 
 import cn.jaspter.springboot.aop.advice.AspectConfig;
+import cn.jaspter.springboot.aop.advice.ForumService;
 import cn.jaspter.springboot.aop.advice.Waiter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +16,14 @@ public class SpringBootAopTest {
 
     @Autowired
     private Waiter waiter;
+    @Autowired
+    private ForumService forumService;
     @Test
     public void testBeforeAdviceWithCGLib() {
         waiter.greetTo("Tom");
+    }
+    @Test
+    public void testThrowAdvice(){
+        forumService.removeForum(1);
     }
 }
