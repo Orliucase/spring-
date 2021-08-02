@@ -21,7 +21,8 @@ import java.util.Arrays;
 @Aspect
 @Component
 public class ForumAspects {
-    @Pointcut("execution(* cn.jaspter.springboot.aop.advice.Waiter.*(..))")
+    private static final String EXP_SS = "execution(* cn.jaspter.springboot.aop.advice.Waiter.*(..))";
+    @Pointcut(EXP_SS)
     public void pointCut() {
 
     }

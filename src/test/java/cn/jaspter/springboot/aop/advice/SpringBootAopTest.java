@@ -1,9 +1,6 @@
-package cn.jaspter.springboot.aop;
+package cn.jaspter.springboot.aop.advice;
 
 
-import cn.jaspter.springboot.aop.advice.AspectConfig;
-import cn.jaspter.springboot.aop.advice.ForumService;
-import cn.jaspter.springboot.aop.advice.Waiter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

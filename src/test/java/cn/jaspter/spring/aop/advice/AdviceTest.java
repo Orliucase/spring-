@@ -5,7 +5,10 @@ import org.springframework.aop.BeforeAdvice;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+/**
+ * @author  liuyue
+ * @Date 2021/7/30
+ */
 public class AdviceTest {
     @Test
     public void testBeforeAdviceWithCGLib() {
@@ -45,7 +48,7 @@ public class AdviceTest {
 
     @Test
     public void testAdviceConfiguredByXml() {
-        String configPath = "cn\\jaspter\\aop\\advice\\beans-advice.xml";
+        String configPath = "cn\\jaspter\\spring\\aop\\advice\\beans-advice.xml";
         ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
         Waiter waiter = (Waiter) context.getBean("waiter-greetingAdvice");
         waiter.greetTo("Brian");
@@ -53,7 +56,7 @@ public class AdviceTest {
 
     @Test
     public void testBeforeAndAfterAdvice() {
-        String configPath = "cn/jaspter/aop/advice/beans-advice.xml";
+        String configPath = "cn/jaspter/spring/aop/advice/beans-advice.xml";
         ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
         Waiter waiter = (Waiter) context.getBean("waiter-beforeAndAfter");
         waiter.greetTo("Brian");
@@ -62,7 +65,7 @@ public class AdviceTest {
 
     @Test
     public void testAroundAdvice() {
-        String configPath = "cn/jaspter/aop/advice/beans-advice.xml";
+        String configPath = "cn/jaspter/spring/aop/advice/beans-advice.xml";
         ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
         Waiter waiter = (Waiter) context.getBean("waiter-around");
         waiter.greetTo("Brian");
@@ -70,7 +73,7 @@ public class AdviceTest {
 
     @Test(expected = Exception.class)
     public void testThrowsAdvice() throws Exception {
-        String configPath = "cn/jaspter/aop/advice/beans-advice.xml";
+        String configPath = "cn/jaspter/spring/aop/advice/beans-advice.xml";
         ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
         ForumService forumService = (ForumService) context.getBean("forumService");
         forumService.updateForum(new Forum());

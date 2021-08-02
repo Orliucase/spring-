@@ -5,36 +5,36 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
 
-    <bean id="greetingBefore" class="cn.jaspter.spring.advice.GreetingBeforeAdvice"/>
-    <bean id="greetingAfter" class="cn.jaspter.spring.advice.GreetingAfterAdvice"/>
-    <bean id="greetingAdvice" class="cn.jaspter.spring.advice.GreetingBeforeAdvice"/>
-    <bean id="greetingAround" class="cn.jaspter.spring.advice.GreetingInterceptor"/>
-    <bean id="target" class="cn.jaspter.spring.advice.NaiveWaiter"/>
+    <bean id="greetingBefore" class="cn.jaspter.spring.aop.advice.GreetingBeforeAdvice"/>
+    <bean id="greetingAfter" class="cn.jaspter.spring.aop.advice.GreetingAfterAdvice"/>
+    <bean id="greetingAdvice" class="cn.jaspter.spring.aop.advice.GreetingBeforeAdvice"/>
+    <bean id="greetingAround" class="cn.jaspter.spring.aop.advice.GreetingInterceptor"/>
+    <bean id="target" class="cn.jaspter.spring.aop.advice.NaiveWaiter"/>
 
     <!--1. greetingAdvice -->
     <bean id="waiter-greetingAdvice"
           class="org.springframework.aop.framework.ProxyFactoryBean"
-          p:proxyInterfaces="cn.jaspter.spring.advice.Waiter"
+          p:proxyInterfaces="cn.jaspter.spring.aop.advice.Waiter"
           p:target-ref="target"
           p:interceptorNames="greetingAdvice"/>
 
     <!--2. before and after advice -->
     <bean id="waiter-beforeAndAfter"
           class="org.springframework.aop.framework.ProxyFactoryBean"
-          p:proxyInterfaces="cn.jaspter.spring.advice.Waiter"
+          p:proxyInterfaces="cn.jaspter.spring.aop.advice.Waiter"
           p:target-ref="target"
           p:interceptorNames="greetingBefore,greetingAfter"/>
 
     <!--3. around advice -->
     <bean id="waiter-around"
           class="org.springframework.aop.framework.ProxyFactoryBean"
-          p:proxyInterfaces="cn.jaspter.spring.advice.Waiter"
+          p:proxyInterfaces="cn.jaspter.spring.aop.advice.Waiter"
           p:target-ref="target"
           p:interceptorNames="greetingAround"/>
 
     <!--4. 异常抛出增强  -->
-    <bean id="forumServiceTarget" class="cn.jaspter.spring.advice.ForumService"/>
-    <bean id="transactionManager" class="cn.jaspter.spring.advice.TransactionManager"/>
+    <bean id="forumServiceTarget" class="cn.jaspter.spring.aop.advice.ForumService"/>
+    <bean id="transactionManager" class="cn.jaspter.spring.aop.advice.TransactionManager"/>
     <bean id="forumService" class="org.springframework.aop.framework.ProxyFactoryBean"
           p:interceptorNames="transactionManager"
           p:target-ref="forumServiceTarget"
